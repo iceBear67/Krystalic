@@ -1,0 +1,89 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
+    }
+}
+plugins {
+    id "de.lukaskoerfer.gradle.delombok" version "0.2"
+    id "io.ebean" version "11.40.1"
+}
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group = pluginGroup
+version = pluginVersion
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+jar.enabled = false
+assemble.dependsOn(shadowJar)
+
+repositories {
+    maven {
+        name = "mavenCentral"
+        url = "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        name = 'CodeMC'
+        url = "https://repo.codemc.org/repository/maven-public"
+    }
+    maven {
+        name = "JitPack"
+        url "https://jitpack.io"
+    }
+}
+task sourcesJar(type: Jar, dependsOn: classes) {
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+}
+javadoc {
+    options.encoding "UTF-8"
+    options.charSet 'UTF-8'
+    source = "build/delombok/delombok"
+    failOnError = false
+}
+shadowJar {
+    zip64 true
+    manifest {
+        attributes 'Main-Class': 'cc.sfclub.polar.Core'
+    }
+}
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+    archives shadowJar
+}
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    compile "io.ebean:ebean:12.2.4"
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compile group: 'com.github.cryptomorin', name: 'XSeries', version: '5.3.1'
+    compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.7'
+    implementation fileTree(dir: "libs",include:["*.jar"])
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor "io.ebean:querybean-generator:12.2.4"
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}

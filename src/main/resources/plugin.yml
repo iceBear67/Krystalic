@@ -1,0 +1,6 @@
+name: CraftPP
+version: @version@
+main: com.github.icebear67.craftpp.CraftPP
+softdepend:
+  - WorldGUard
+  - Residence
