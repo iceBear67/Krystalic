@@ -24,8 +24,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew shadowjar
-      - name: Upload artifact
-    - uses: actions/upload-artifact@v1.0.0
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
       with:
         # Artifact name
         name: CraftPP
