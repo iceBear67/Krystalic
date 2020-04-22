@@ -7,10 +7,10 @@ import org.bukkit.inventory.ItemStack;
 
 public interface ISecurityManager {
     /**
-     * @param player
-     * @param location
-     * @param itemInHand
-     * @param interactType
+     * @param player       origin
+     * @param location     block location
+     * @param itemInHand   item in players hand now
+     * @param interactType interact type
      * @return is it allow to do?
      */
     boolean onInteract(Player player, Location location, ItemStack itemInHand, InteractType interactType);

@@ -5,7 +5,6 @@ import com.github.icebear67.craftpp.CraftPP;
 import com.github.icebear67.craftpp.InteractType;
 import com.github.icebear67.craftpp.api.ItemMachine;
 import com.github.icebear67.craftpp.machine.result.Result;
-import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class EngineerHammer extends ItemMachine {
-    @Getter
     private static final String id = "engineer_hammer";
 
     public static Recipe getRecipe() {
@@ -56,5 +54,10 @@ public class EngineerHammer extends ItemMachine {
     @Override
     public XMaterial getItemType() {
         return XMaterial.CRAFTING_TABLE;
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 }

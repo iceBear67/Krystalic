@@ -19,7 +19,7 @@ public class MachineManager {
     }
 
     public void registerMachine(Machine machine) {
-        Log.debug("New Machine: " + machine.getUUID().toString() + "," + machine.getName());
+        Log.debug("New Machine: " + machine.getUUID().toString() + "," + machine.getId());
         machines.put(machine.getUUID(), machine);
         if (machine instanceof BlockMachine) {
             BlockMachine blockMachine = (BlockMachine) machine;

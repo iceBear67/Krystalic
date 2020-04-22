@@ -23,11 +23,14 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew shadowjar
-    - name: Upload artifact
+      run: ./gradlew install
+    - name: Upload artifact (JAR)
       uses: actions/upload-artifact@v1.0.0
       with:
-        # Artifact name
         name: CraftPP
-        # Directory containing files to upload
-        path: builld/libs
+        path: build/libs
+    - name: Upload artifact (Doc)
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: JavaDoc
+        path: build/docs

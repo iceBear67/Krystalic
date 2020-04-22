@@ -16,10 +16,6 @@ import java.util.UUID;
 public abstract class Machine extends Model implements IMachine {
     @Getter
     private boolean enabled = false;
-    /**
-     * @return uuid id
-     */
-    @Getter
     private UUID uuid;
     @Setter
     @Getter
@@ -32,6 +28,9 @@ public abstract class Machine extends Model implements IMachine {
         }
     }
 
+    /**
+     * @return uuid id
+     */
     public UUID getUUID() {
         return uuid;
     }
