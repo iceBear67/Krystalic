@@ -3,12 +3,9 @@ package com.github.icebear67.craftpp.item;
 import com.cryptomorin.xseries.XMaterial;
 import com.github.icebear67.craftpp.CraftPP;
 import com.github.icebear67.craftpp.InteractType;
-import com.github.icebear67.craftpp.api.interfaces.IPowerable;
-import com.github.icebear67.craftpp.api.machine.AbstractItemMachine;
+import com.github.icebear67.craftpp.api.machine.AbstractMachine;
 import com.github.icebear67.craftpp.machine.result.Result;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -18,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class EngineerHammer extends AbstractItemMachine implements IPowerable {
+public class EngineerHammer extends AbstractMachine {
     private static final String id = "engineer_hammer";
 
     public static Recipe getRecipe() {
@@ -35,36 +32,27 @@ public class EngineerHammer extends AbstractItemMachine implements IPowerable {
     }
 
     public static void register() {
-        CraftPP.getCpp().registerItem(id, getRecipe().getResult().getItemMeta().getLore(), EngineerHammer.class, getRecipe());
+        CraftPP.getInst().registerItem(id, getRecipe().getResult().getItemMeta().getLore(), EngineerHammer.class, getRecipe());
     }
+
 
     @Override
     public Result onUpdate() {
         return Result.NORMAL;
-
     }
 
     @Override
     public boolean onInteract(InteractType interactType, Player player, Location location) {
-        if (interactType == InteractType.RIGHT_CLICK && player.isSneaking() && location.getBlock().getType() == Material.AIR) {
-            player.sendMessage(ChatColor.GREEN + "Craft++ by iceBear67");
-        }
-        return true;
-    }
-
-    @Override
-    public XMaterial getItemType() {
-        return XMaterial.CRAFTING_TABLE;
+        return false;
     }
 
     @Override
     public String getId() {
-        return id;
+        return "engineer_hammer";
     }
 
     @Override
     public int getMaxEnergy() {
-        return XMaterial.IRON_AXE.parseItem().getDurability();
+        return 1024;
     }
-
 }

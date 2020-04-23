@@ -27,7 +27,7 @@ public class BlockConnector implements Listener {
         if (interactType != null) {
             AtomicBoolean canBuild = new AtomicBoolean(true);
             InteractType finalInteractType = interactType;
-            CraftPP.getCpp().getSecurityManagers().forEach(smgr -> {
+            CraftPP.getInst().getSecurityManagers().forEach(smgr -> {
                 boolean a = smgr.onInteract(event.getPlayer(), event.getClickedBlock().getLocation(), event.getItem(), finalInteractType);
                 if (canBuild.get() != false) {
                     canBuild.set(a);

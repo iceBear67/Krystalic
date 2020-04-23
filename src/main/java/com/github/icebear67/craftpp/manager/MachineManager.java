@@ -1,6 +1,8 @@
 package com.github.icebear67.craftpp.manager;
 
+import com.github.icebear67.craftpp.CraftPP;
 import com.github.icebear67.craftpp.api.machine.AbstractMachine;
+import com.github.icebear67.craftpp.data.Metadata;
 import com.github.icebear67.craftpp.util.Log;
 import lombok.Getter;
 import org.bukkit.Location;
@@ -11,8 +13,8 @@ import java.util.UUID;
 public class MachineManager {
     @Getter
     private static MachineManager instance = new MachineManager();
-    LinkedHashMap<UUID, AbstractMachine> machines;
-    LinkedHashMap<Integer, UUID> blockMachines = new LinkedHashMap<>();
+    private LinkedHashMap<UUID, AbstractMachine> machines = new LinkedHashMap<>();
+    private LinkedHashMap<Integer, UUID> blockMachines = new LinkedHashMap<>();
 
     private MachineManager() {
     }
@@ -23,7 +25,7 @@ public class MachineManager {
     }
 
     public void bindBlock(AbstractMachine machine, Location location, String id) {
-        machine.getMetadata().put("internal.location." + id, String.valueOf(location.hashCode()));
+        machine.getMetadata().put(Metadata.LOCATION + id, String.valueOf(location.hashCode()));
         blockMachines.put(location.hashCode(), machine.getUUID());
     }
 
@@ -45,11 +47,23 @@ public class MachineManager {
 
             return;
         }
-        machine.getMetadata().remove("internal.location." + id);
+        machine.getMetadata().remove(Metadata.LOCATION + id);
         blockMachines.remove(location.hashCode());
     }
 
-    public void saveMachines() {
+    public void loadMachines() {
+        CraftPP.getInst().getDao().query(AbstractMachine.class, null).forEach(rec -> {
+            machines.put(rec.getUUID(), rec);
+            Log.debug("Loading.. " + rec.getId() + " from " + rec.getClass().getCanonicalName() + " UUID:" + rec.getUUID());
+            if (rec.getMetadata().containsKey(Metadata.LOCATION.toString())) {
+                blockMachines.put(Integer.parseInt(rec.getMetadata().get(Metadata.LOCATION.toString())), rec.getUUID());
+            }
+        });
+    }
 
+    public void saveMachines() {
+        machines.forEach((k, v) -> {
+            CraftPP.getInst().getDao().update(v);
+        });
     }
 }

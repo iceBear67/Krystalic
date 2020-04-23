@@ -10,7 +10,7 @@ import com.github.icebear67.craftpp.manager.MachineManager;
 import com.github.icebear67.craftpp.manager.RecipeManager;
 import com.github.icebear67.craftpp.util.Log;
 import com.google.gson.Gson;
-import com.j256.ormlite.support.ConnectionSource;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -20,6 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.nutz.dao.Dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public final class CraftPP extends JavaPlugin {
     @Getter
     private static final String VERSION = "v0";
     @Getter
-    private static CraftPP cpp;
+    private static CraftPP inst;
     @Getter
     @Setter
     private static Lang lang;
@@ -41,7 +42,8 @@ public final class CraftPP extends JavaPlugin {
     private final Metrics metrics = new Metrics(this, 7275);
     protected Boolean loaded = false;
     @Getter
-    private ConnectionSource connSource;
+    @Setter(value = AccessLevel.PROTECTED)
+    private Dao dao;
     @Getter
     private HashMap<String, Item> itemMap = new HashMap<>();
     @Getter
@@ -53,7 +55,7 @@ public final class CraftPP extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         //todo achievement
-        cpp = this;
+        inst = this;
         new CraftPPLoader().runTaskAsynchronously(this);
     }
 
@@ -63,7 +65,6 @@ public final class CraftPP extends JavaPlugin {
         getServer().clearRecipes();
         Log.info("Saving Data..");
         Bukkit.getScheduler().cancelTasks(this);
-        connSource.close();
 
         // Plugin shutdown logic
     }
@@ -71,10 +72,6 @@ public final class CraftPP extends JavaPlugin {
     protected void setConf(Config config) {
         Log.info("Config loaded.");
         conf = config;
-    }
-
-    protected void setCs(ConnectionSource cs) {
-        this.connSource = cs;
     }
 
     /**

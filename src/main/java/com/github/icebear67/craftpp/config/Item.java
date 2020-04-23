@@ -13,7 +13,7 @@ public class Item extends PluginConfig {
     public List<String> lore = new ArrayList<>();
 
     public Item(String name) {
-        super(CraftPP.getCpp().getDataFolder().getAbsolutePath() + "/item");
+        super(CraftPP.getInst().getDataFolder().getAbsolutePath() + "/item");
         this.codeName = name;
     }
 

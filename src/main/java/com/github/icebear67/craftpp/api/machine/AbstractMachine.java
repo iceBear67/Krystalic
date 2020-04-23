@@ -4,21 +4,21 @@ import com.github.icebear67.craftpp.InteractType;
 import com.github.icebear67.craftpp.api.interfaces.IMachine;
 import com.github.icebear67.craftpp.api.interfaces.IPowerable;
 import com.github.icebear67.craftpp.machine.result.Result;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.nutz.dao.entity.annotation.Name;
+import org.nutz.dao.entity.annotation.Table;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-@DatabaseTable(tableName = "machines")
+@Table("machine")
 public abstract class AbstractMachine implements IMachine, IPowerable {
     @Getter
     private boolean enabled = false;
-    @DatabaseField(id = true, unique = true)
+    @Name
     private UUID uuid;
     private int energy = getMaxEnergy();
     @Setter

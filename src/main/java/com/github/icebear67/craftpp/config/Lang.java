@@ -11,7 +11,7 @@ public class Lang extends PluginConfig {
     public HashMap<String, Item> items = new HashMap<>();
 
     public Lang(String localeName) {
-        super(CraftPP.getCpp().getDataFolder().getAbsolutePath().concat("/lang"));
+        super(CraftPP.getInst().getDataFolder().getAbsolutePath().concat("/lang"));
         this.localeName = localeName;
     }
 

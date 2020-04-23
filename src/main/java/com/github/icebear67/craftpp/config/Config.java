@@ -13,6 +13,7 @@ public class Config extends PluginConfig {
     public Boolean checkUpdate = true;
     public Boolean debug = false;
     public Boolean allowStackCraft = false;
+    public int saveDelay = 300;
 
     public Config(JavaPlugin p) {
         super(p);
