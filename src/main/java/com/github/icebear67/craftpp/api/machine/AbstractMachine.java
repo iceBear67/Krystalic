@@ -19,7 +19,7 @@ public abstract class AbstractMachine implements IMachine, IPowerable {
     private boolean enabled = false;
     @DatabaseField(id = true, unique = true)
     private UUID uuid;
-
+    private int energy = getMaxEnergy();
     @Setter
     @Getter
     private boolean frozen = false;
@@ -29,6 +29,33 @@ public abstract class AbstractMachine implements IMachine, IPowerable {
             uuid = UUID.randomUUID();
             //todo save here
         }
+    }
+
+    @Override
+    public int getEnergy() {
+        return energy;
+    }
+
+    @Override
+    public int pushEnergy(int value) {
+        for (int i = 0; i != value; i++) {
+            if (energy + i > getMaxEnergy()) {
+                return energy;
+            }
+            energy = energy + i;
+        }
+        return energy;
+    }
+
+    @Override
+    public int pullEnergy(int value) {
+        for (int i = 0; i != value; i++) {
+            if (energy - i < 0) {
+                return energy;
+            }
+            energy = energy - i;
+        }
+        return value;
     }
 
     /**

@@ -1,6 +1,8 @@
 name: CraftPP
 version: @version@
 main: com.github.icebear67.craftpp.CraftPP
+api-version: 1.13
 softdepend:
   - WorldGUard
   - Residence
+  - NBTAPI

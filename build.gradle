@@ -77,6 +77,7 @@ dependencies {
     compile group: 'com.github.cryptomorin', name: 'XSeries', version: '5.3.1'
     compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.7'
     compileOnly fileTree(dir: "libs",include:["*.jar"])
+    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.3.1'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     annotationProcessor "io.ebean:querybean-generator:12.2.4"
 }

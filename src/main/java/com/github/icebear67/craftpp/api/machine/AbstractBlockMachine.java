@@ -25,6 +25,7 @@ public abstract class AbstractBlockMachine extends AbstractMachine implements IP
 
     @Override
     public boolean onInteract(InteractType interactType, Player player, Location location) {
+
         if (interactType == InteractType.PLACE && this.canPlace(player)) {
             return true;
         } else if (interactType == InteractType.BREAK && this.canBreak(player)) {
