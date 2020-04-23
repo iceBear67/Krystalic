@@ -5,6 +5,7 @@ import com.github.icebear67.craftpp.api.machine.AbstractMachine;
 import com.github.icebear67.craftpp.config.Config;
 import com.github.icebear67.craftpp.config.Item;
 import com.github.icebear67.craftpp.config.Lang;
+import com.github.icebear67.craftpp.manager.MachineManager;
 import com.github.icebear67.craftpp.manager.RecipeManager;
 import com.github.icebear67.craftpp.util.Log;
 import com.google.gson.Gson;
@@ -42,6 +43,8 @@ public final class CraftPP extends JavaPlugin {
     private HashMap<String, Item> itemMap = new HashMap<>();
     @Getter
     private List<ISecurityManager> securityManagers = new ArrayList<>();
+    @Getter
+    private MachineManager machineManager = MachineManager.getInstance();
 
     @Override
     public void onEnable() {

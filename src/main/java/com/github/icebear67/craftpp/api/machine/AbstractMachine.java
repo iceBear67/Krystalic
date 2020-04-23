@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "machines")
@@ -23,6 +24,8 @@ public abstract class AbstractMachine implements IMachine, IPowerable {
     @Setter
     @Getter
     private boolean frozen = false;
+    @Getter
+    private HashMap<String, String> metadata = new HashMap<>();
 
     public AbstractMachine() {
         if (this.uuid == null) {
