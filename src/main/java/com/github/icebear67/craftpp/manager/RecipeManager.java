@@ -2,6 +2,7 @@ package com.github.icebear67.craftpp.manager;
 
 import com.github.icebear67.craftpp.CraftPP;
 import com.github.icebear67.craftpp.api.machine.AbstractMachine;
+import com.github.icebear67.craftpp.data.Metadata;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import org.bukkit.event.EventHandler;
@@ -43,7 +44,7 @@ public class RecipeManager implements Listener {
                 AbstractMachine machine = items.get(event.getRecipe().getResult().hashCode()).getDeclaredConstructor().newInstance();
                 MachineManager.getInstance().registerMachine(machine);
                 NBTItem nbtItem = new NBTItem(target);
-                nbtItem.setString("cppUUID", machine.getUUID().toString());
+                nbtItem.setString(Metadata.UUID.toString(), machine.getUUID().toString());
                 event.setCurrentItem(nbtItem.getItem());
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();

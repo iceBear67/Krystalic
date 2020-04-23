@@ -5,6 +5,7 @@ import com.github.icebear67.craftpp.api.machine.AbstractMachine;
 import com.github.icebear67.craftpp.config.Config;
 import com.github.icebear67.craftpp.config.Item;
 import com.github.icebear67.craftpp.config.Lang;
+import com.github.icebear67.craftpp.data.Metadata;
 import com.github.icebear67.craftpp.manager.MachineManager;
 import com.github.icebear67.craftpp.manager.RecipeManager;
 import com.github.icebear67.craftpp.util.Log;
@@ -15,6 +16,8 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -114,5 +117,10 @@ public final class CraftPP extends JavaPlugin {
      */
     public void addSecurityManager(ISecurityManager smgr) {
         securityManagers.add(smgr);
+    }
+
+    public boolean isCPPBlock(Block block) {
+        AbstractMachine machine = machineManager.getMachineByLoc(block.getLocation());
+        return machine != null && Material.valueOf(machine.getMetadata().get(Metadata.MATERIAL)).equals(block.getType());
     }
 }
