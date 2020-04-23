@@ -1,5 +1,6 @@
-package com.github.icebear67.craftpp;
+package com.github.icebear67.craftpp.api.interfaces;
 
+import com.github.icebear67.craftpp.InteractType;
 import com.github.icebear67.craftpp.machine.result.Result;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

@@ -1,30 +1,33 @@
-package com.github.icebear67.craftpp.api;
+package com.github.icebear67.craftpp.api.machine;
 
-import com.github.icebear67.craftpp.IMachine;
 import com.github.icebear67.craftpp.InteractType;
+import com.github.icebear67.craftpp.api.interfaces.IMachine;
+import com.github.icebear67.craftpp.api.interfaces.IPowerable;
 import com.github.icebear67.craftpp.machine.result.Result;
-import io.ebean.Model;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
-@MappedSuperclass
-public abstract class Machine extends Model implements IMachine {
+@DatabaseTable(tableName = "machines")
+public abstract class AbstractMachine implements IMachine, IPowerable {
     @Getter
     private boolean enabled = false;
+    @DatabaseField(id = true, unique = true)
     private UUID uuid;
+
     @Setter
     @Getter
     private boolean frozen = false;
 
-    public Machine() {
+    public AbstractMachine() {
         if (this.uuid == null) {
             uuid = UUID.randomUUID();
-            this.save();
+            //todo save here
         }
     }
 

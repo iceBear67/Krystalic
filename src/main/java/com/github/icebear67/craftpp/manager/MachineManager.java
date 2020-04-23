@@ -1,9 +1,8 @@
 package com.github.icebear67.craftpp.manager;
 
-import com.github.icebear67.craftpp.CraftPP;
-import com.github.icebear67.craftpp.Log;
-import com.github.icebear67.craftpp.api.BlockMachine;
-import com.github.icebear67.craftpp.api.Machine;
+import com.github.icebear67.craftpp.api.machine.AbstractBlockMachine;
+import com.github.icebear67.craftpp.api.machine.AbstractMachine;
+import com.github.icebear67.craftpp.util.Log;
 import lombok.Getter;
 
 import java.util.LinkedHashMap;
@@ -12,17 +11,17 @@ import java.util.UUID;
 public class MachineManager {
     @Getter
     private static MachineManager instance = new MachineManager();
-    LinkedHashMap<UUID, Machine> machines = new LinkedHashMap<>();
+    LinkedHashMap<UUID, AbstractMachine> machines;
     LinkedHashMap<Integer, UUID> blockMachines = new LinkedHashMap<>();
 
     private MachineManager() {
     }
 
-    public void registerMachine(Machine machine) {
-        Log.debug("New Machine: " + machine.getUUID().toString() + "," + machine.getId());
+    public void registerMachine(AbstractMachine machine) {
+        Log.debug("New AbstractMachine: " + machine.getUUID().toString() + "," + machine.getId());
         machines.put(machine.getUUID(), machine);
-        if (machine instanceof BlockMachine) {
-            BlockMachine blockMachine = (BlockMachine) machine;
+        if (machine instanceof AbstractBlockMachine) {
+            AbstractBlockMachine blockMachine = (AbstractBlockMachine) machine;
             blockMachine.getLocations().forEach(loc -> {
                 blockMachines.put(loc.hashCode(), machine.getUUID());
             });
@@ -30,7 +29,5 @@ public class MachineManager {
     }
 
     public void saveMachines() {
-        CraftPP.getCpp().getDb().save(machines);
-        CraftPP.getCpp().getDb().save(blockMachines);
     }
 }

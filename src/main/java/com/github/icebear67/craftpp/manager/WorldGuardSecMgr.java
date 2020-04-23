@@ -1,8 +1,8 @@
 package com.github.icebear67.craftpp.manager;
 
 import com.github.icebear67.craftpp.InteractType;
-import com.github.icebear67.craftpp.Log;
 import com.github.icebear67.craftpp.api.interfaces.ISecurityManager;
+import com.github.icebear67.craftpp.util.Log;
 import com.sk89q.worldguard.bukkit.RegionQuery;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;

@@ -1,7 +1,7 @@
 package com.github.icebear67.craftpp.config;
 
 import com.github.icebear67.craftpp.CraftPP;
-import com.github.icebear67.craftpp.PluginConfig;
+import com.github.icebear67.craftpp.util.PluginConfig;
 
 import java.util.HashMap;
 

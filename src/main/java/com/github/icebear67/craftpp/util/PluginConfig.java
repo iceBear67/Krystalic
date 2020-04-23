@@ -1,5 +1,6 @@
-package com.github.icebear67.craftpp;
+package com.github.icebear67.craftpp.util;
 
+import com.github.icebear67.craftpp.CraftPP;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;

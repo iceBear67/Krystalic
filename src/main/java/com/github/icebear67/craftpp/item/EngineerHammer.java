@@ -3,7 +3,8 @@ package com.github.icebear67.craftpp.item;
 import com.cryptomorin.xseries.XMaterial;
 import com.github.icebear67.craftpp.CraftPP;
 import com.github.icebear67.craftpp.InteractType;
-import com.github.icebear67.craftpp.api.ItemMachine;
+import com.github.icebear67.craftpp.api.interfaces.IPowerable;
+import com.github.icebear67.craftpp.api.machine.AbstractItemMachine;
 import com.github.icebear67.craftpp.machine.result.Result;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class EngineerHammer extends ItemMachine {
+public class EngineerHammer extends AbstractItemMachine implements IPowerable {
     private static final String id = "engineer_hammer";
 
     public static Recipe getRecipe() {
@@ -60,4 +61,10 @@ public class EngineerHammer extends ItemMachine {
     public String getId() {
         return id;
     }
+
+    @Override
+    public int getMaxEnergy() {
+        return XMaterial.IRON_AXE.parseItem().getDurability();
+    }
+
 }

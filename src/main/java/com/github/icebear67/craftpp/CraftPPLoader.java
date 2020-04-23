@@ -1,16 +1,21 @@
 package com.github.icebear67.craftpp;
 
+import com.github.icebear67.craftpp.api.machine.AbstractMachine;
 import com.github.icebear67.craftpp.config.Config;
+import com.github.icebear67.craftpp.config.Item;
 import com.github.icebear67.craftpp.config.Lang;
+import com.github.icebear67.craftpp.data.DBlockMachine;
 import com.github.icebear67.craftpp.item.EngineerHammer;
 import com.github.icebear67.craftpp.machine.TickListener;
 import com.github.icebear67.craftpp.manager.MachineManager;
 import com.github.icebear67.craftpp.manager.RecipeManager;
 import com.github.icebear67.craftpp.manager.ResidenceSecMgr;
 import com.github.icebear67.craftpp.manager.WorldGuardSecMgr;
-import io.ebean.DatabaseFactory;
-import io.ebean.config.DatabaseConfig;
-import io.ebean.datasource.DataSourceConfig;
+import com.github.icebear67.craftpp.util.Log;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Objects;
 
 public class CraftPPLoader extends BukkitRunnable {
     @Override
@@ -56,13 +62,14 @@ public class CraftPPLoader extends BukkitRunnable {
         CraftPP.getCpp().loaded = true;
     }
 
+    @SneakyThrows
     private void loadDatabase() {
-        DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl(CraftPP.getConf().jdbcUrl);
-        dataSourceConfig.setDriver(CraftPP.getConf().dbDriver);
-        DatabaseConfig dbConf = new DatabaseConfig();
-        dbConf.setDataSourceConfig(dataSourceConfig);
-        CraftPP.getCpp().setDb(DatabaseFactory.create(dbConf));
+        ConnectionSource connectionSource = new JdbcConnectionSource(CraftPP.getConf().jdbcUrl);
+        CraftPP.getCpp().setCs(connectionSource);
+
+        TableUtils.createTableIfNotExists(connectionSource, AbstractMachine.class);
+        TableUtils.createTableIfNotExists(connectionSource, DBlockMachine.class);
+
     }
 
     private void checkUpdate() {
@@ -83,11 +90,28 @@ public class CraftPPLoader extends BukkitRunnable {
 
     private void loadMachines() {
         MachineManager.getInstance().registerMachine(new TickListener());
+        //They are not same.
         loadItems();
     }
 
+    @SneakyThrows
     private void loadItems() {
+        File dataDir = new File(CraftPP.getCpp().getDataFolder().getAbsolutePath() + "/item");
+        if (!dataDir.exists()) {
+            dataDir.mkdir();
+            CraftPP.getCpp().getItemMap().forEach((k, v) -> {
+                v.saveConfig();
+            });
+            return;
+        }
         EngineerHammer.register();
+
+        //Must be last
+        for (String s : Objects.requireNonNull(dataDir.list((file, s) -> s.endsWith(".json")))) {
+            Item i = new Item(s);
+            i = (Item) i.reloadConfig();
+            CraftPP.getCpp().getItemMap().put(s.replaceAll("\\.json", ""), i);
+        }
     }
 
     private void loadConfig() {
@@ -111,7 +135,7 @@ public class CraftPPLoader extends BukkitRunnable {
         File langFile = new File(CraftPP.getCpp().getDataFolder().getAbsolutePath() + "/lang/" + CraftPP.getConf().locale + ".json");
         if (!langFile.exists()) {
             Log.warn("/lang/" + CraftPP.getConf().locale + ".json not exist.");
-            Log.info("Saving..");
+            Log.info("Saving Default..");
             lang.saveConfig();
         }
         lang = (Lang) lang.reloadConfig();

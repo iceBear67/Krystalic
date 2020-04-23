@@ -71,7 +71,8 @@ artifacts {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
-    compile "io.ebean:ebean:12.2.4"
+    compile group: 'com.j256.ormlite', name: 'ormlite-core', version: '5.1'
+    compile group: 'com.j256.ormlite', name: 'ormlite-jdbc', version: '5.1'
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
     compile group: 'com.github.cryptomorin', name: 'XSeries', version: '5.3.1'
     compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.7'

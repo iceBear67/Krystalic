@@ -1,4 +1,4 @@
-package com.github.icebear67.craftpp;
+package com.github.icebear67.craftpp.api.interfaces;
 
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Location;

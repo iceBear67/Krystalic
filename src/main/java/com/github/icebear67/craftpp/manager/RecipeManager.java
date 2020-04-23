@@ -1,7 +1,7 @@
 package com.github.icebear67.craftpp.manager;
 
 import com.github.icebear67.craftpp.CraftPP;
-import com.github.icebear67.craftpp.api.Machine;
+import com.github.icebear67.craftpp.api.machine.AbstractMachine;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -18,12 +18,12 @@ import java.util.List;
 public class RecipeManager implements Listener {
     @Getter
     private static RecipeManager instance = new RecipeManager();
-    private HashMap<Integer, Class<? extends Machine>> items = new HashMap<>();
+    private HashMap<Integer, Class<? extends AbstractMachine>> items = new HashMap<>();
 
     private RecipeManager() {
     }
 
-    public void register(Recipe recipe, Class<? extends Machine> machine) {
+    public void register(Recipe recipe, Class<? extends AbstractMachine> machine) {
         items.put(recipe.getResult().hashCode(), machine);
     }
 
@@ -40,11 +40,11 @@ public class RecipeManager implements Listener {
                 }
             }
             try {
-                Machine machine = items.get(event.getRecipe().getResult().hashCode()).getDeclaredConstructor().newInstance();
+                AbstractMachine machine = items.get(event.getRecipe().getResult().hashCode()).getDeclaredConstructor().newInstance();
                 MachineManager.getInstance().registerMachine(machine);
                 originalLore.add("");
                 originalLore.add(ChatColor.GRAY + machine.getUUID().toString());
-                im.setLore(originalLore);
+                im.setLore(originalLore); //todo omg use NBT instead of lore
                 target.setItemMeta(im);
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();

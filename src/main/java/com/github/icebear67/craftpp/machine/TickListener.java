@@ -1,8 +1,8 @@
 package com.github.icebear67.craftpp.machine;
 
 import com.github.icebear67.craftpp.InteractType;
-import com.github.icebear67.craftpp.api.Machine;
 import com.github.icebear67.craftpp.api.event.TickEvent;
+import com.github.icebear67.craftpp.api.machine.AbstractMachine;
 import com.github.icebear67.craftpp.machine.result.Result;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 /**
  * call TickEvent for additional plugins.
  */
-public class TickListener extends Machine {
+public class TickListener extends AbstractMachine {
     @Getter
     private String id = "additional_plugin";
 
