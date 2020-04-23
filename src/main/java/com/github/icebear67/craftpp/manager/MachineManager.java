@@ -42,6 +42,7 @@ public class MachineManager {
     public void unbindBlock(AbstractMachine machine, Location location, String id) {
         if (!String.valueOf(location.hashCode()).equals(machine.getMetadata().get("internal.location." + id))) {
             Log.warn("Machine " + machine.getId() + "(" + machine.getUUID().toString() + ") from" + machine.getClass().getCanonicalName() + "tried to unbind an invaild location");
+
             return;
         }
         machine.getMetadata().remove("internal.location." + id);
