@@ -10,16 +10,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.List;
 
 public class RecipeManager implements Listener {
     @Getter
-    private static RecipeManager instance = new RecipeManager();
-    private HashMap<Integer, Class<? extends AbstractMachine>> items = new HashMap<>();
+    private static final RecipeManager instance = new RecipeManager();
+    private final HashMap<Integer, Class<? extends AbstractMachine>> items = new HashMap<>();
 
     private RecipeManager() {
     }
@@ -32,8 +30,6 @@ public class RecipeManager implements Listener {
     private void onCraft(CraftItemEvent event) {
         if (items.containsKey(event.getRecipe().getResult().hashCode())) {
             ItemStack target = event.getRecipe().getResult();
-            List<String> originalLore = target.getItemMeta().getLore();
-            ItemMeta im = target.getItemMeta();
             if (target.getAmount() > 1) {
                 if (!CraftPP.getConf().allowStackCraft) {
                     event.setCancelled(true);

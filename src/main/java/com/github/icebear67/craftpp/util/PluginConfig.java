@@ -5,7 +5,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 
-//todo collect to PolarLib
 public class PluginConfig {
     private transient String root;
 

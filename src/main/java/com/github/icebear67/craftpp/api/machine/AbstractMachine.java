@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table("machine")
 public abstract class AbstractMachine implements IMachine, IPowerable {
     @Getter
-    private boolean enabled = false;
+    private final boolean enabled = false;
     @Name
     private UUID uuid;
     private int energy = getMaxEnergy();
@@ -25,12 +25,11 @@ public abstract class AbstractMachine implements IMachine, IPowerable {
     @Getter
     private boolean frozen = false;
     @Getter
-    private HashMap<String, String> metadata = new HashMap<>();
+    private final HashMap<String, String> metadata = new HashMap<>();
 
     public AbstractMachine() {
         if (this.uuid == null) {
             uuid = UUID.randomUUID();
-            //todo save here
         }
     }
 

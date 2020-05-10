@@ -35,7 +35,7 @@ public final class CraftPP extends JavaPlugin {
     @Setter
     private static Lang lang;
     @Getter
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
     @Getter
     private static Config conf;
     @Getter
@@ -45,16 +45,14 @@ public final class CraftPP extends JavaPlugin {
     @Setter(value = AccessLevel.PROTECTED)
     private Dao dao;
     @Getter
-    private HashMap<String, Item> itemMap = new HashMap<>();
+    private final HashMap<String, Item> itemMap = new HashMap<>();
     @Getter
-    private List<ISecurityManager> securityManagers = new ArrayList<>();
+    private final List<ISecurityManager> securityManagers = new ArrayList<>();
     @Getter
-    private MachineManager machineManager = MachineManager.getInstance();
+    private final MachineManager machineManager = MachineManager.getInstance();
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        //todo achievement
         inst = this;
         new CraftPPLoader().runTaskAsynchronously(this);
     }

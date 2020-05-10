@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
  */
 public class TickListener extends AbstractMachine {
     @Getter
-    private String id = "additional_plugin";
+    private final String id = "additional_plugin";
 
     @Override
     public Result onUpdate() {
@@ -25,5 +25,10 @@ public class TickListener extends AbstractMachine {
     @Override
     public boolean onInteract(InteractType interactType, Player player, Location location) {
         return false;
+    }
+
+    @Override
+    public int getMaxEnergy() {
+        return 0;
     }
 }

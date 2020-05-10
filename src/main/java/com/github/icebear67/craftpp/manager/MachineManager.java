@@ -12,15 +12,15 @@ import java.util.UUID;
 
 public class MachineManager {
     @Getter
-    private static MachineManager instance = new MachineManager();
-    private LinkedHashMap<UUID, AbstractMachine> machines = new LinkedHashMap<>();
-    private LinkedHashMap<Integer, UUID> blockMachines = new LinkedHashMap<>();
+    private static final MachineManager instance = new MachineManager();
+    private final LinkedHashMap<UUID, AbstractMachine> machines = new LinkedHashMap<>();
+    private final LinkedHashMap<Integer, UUID> blockMachines = new LinkedHashMap<>();
 
     private MachineManager() {
     }
 
     public void registerMachine(AbstractMachine machine) {
-        Log.debug("New AbstractMachine: " + machine.getUUID().toString() + "," + machine.getId());
+        Log.debug("New Machine: " + machine.getUUID().toString() + "," + machine.getId());
         machines.put(machine.getUUID(), machine);
     }
 
@@ -42,8 +42,8 @@ public class MachineManager {
     }
 
     public void unbindBlock(AbstractMachine machine, Location location, String id) {
-        if (!String.valueOf(location.hashCode()).equals(machine.getMetadata().get("internal.location." + id))) {
-            Log.warn("Machine " + machine.getId() + "(" + machine.getUUID().toString() + ") from" + machine.getClass().getCanonicalName() + "tried to unbind an invaild location");
+        if (!String.valueOf(location.hashCode()).equals(machine.getMetadata().get(Metadata.LOCATION + id))) {
+            Log.warn("Machine " + machine.getId() + "(" + machine.getUUID().toString() + ") from" + machine.getClass().getCanonicalName() + "tried to unbind an invalid location");
 
             return;
         }

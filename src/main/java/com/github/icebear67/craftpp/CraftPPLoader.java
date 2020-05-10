@@ -4,7 +4,6 @@ import com.github.icebear67.craftpp.api.machine.AbstractMachine;
 import com.github.icebear67.craftpp.config.Config;
 import com.github.icebear67.craftpp.config.Item;
 import com.github.icebear67.craftpp.config.Lang;
-import com.github.icebear67.craftpp.item.EngineerHammer;
 import com.github.icebear67.craftpp.machine.TickListener;
 import com.github.icebear67.craftpp.manager.MachineManager;
 import com.github.icebear67.craftpp.manager.RecipeManager;
@@ -110,7 +109,7 @@ public class CraftPPLoader extends BukkitRunnable {
             });
             return;
         }
-        EngineerHammer.register();
+
 
         //Must be last
         for (String s : Objects.requireNonNull(dataDir.list((file, s) -> s.endsWith(".json")))) {
